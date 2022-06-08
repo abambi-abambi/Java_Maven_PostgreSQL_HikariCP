@@ -1,0 +1,273 @@
+d05
+
+Видео-лекция от rosfryd (3 части):
+https://www.youtube.com/watch?v=tRZx9OEg7VY
+https://www.youtube.com/watch?v=BSHM2j3UYBY
+https://www.youtube.com/watch?v=ZwKILawWWrs
+
+#Установка Maven (Убунту) // А на маке - через brew?
+#sudo apt install maven
+
+*****
+
+https://habr.com/ru/post/434968/
+Кое-что о пространстве имён
++ "тайна директивы "package"" у Java в сравнении с namespace у php и некоторых других
+
+*****
+
+Создаем проект:
+
+1 вариант:
+https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+Maven in 5 Minutes: создать Maven-проект из командной строки
+
+https://maven.apache.org/archetype/maven-archetype-plugin/usage.html
+Создать Maven-проект из командной строки - чуть более подробно
+
+Creating a Project:
+Пример:
+mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+Реальность: создаем проект
+mvn archetype:generate -DgroupId=edu.school21.chat -DartifactId=Chat -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+Компилируем (наш просто тестовый) проект:
+mvn package
+
+Запускаем (наш просто тестовый) проект:
+java -cp target/Chat-1.0-SNAPSHOT.jar edu.school21.chat.App
+
+----
+2 вариант:
+Создаем новый Maven проект из IDEA (со сгенерированным файлом pom.xml):
+File -> New -> Project -> Maven Project
+
+Прописать в *Advanced settings:
+groupId=edu.school21.chat
+artifactId=Chat
+
+-----
+Без Maven пришлось бы использовать вариант создать все папки и файлы вручную.
+
+*****
+ex00
+
+Проверить правильность структуры папок (размещение файлов):
+tree
+
+#Проверить версию PostgreSQL, установленную на компьютере
+#Client version:
+psql --version
+
+#Server version:
+pg_config --version
+
+Команды для контроля postgresql (Убунту):
+sudo service postgresql restart
+sudo service postgresql start
+sudo service postgresql stop
+sudo lsof -nP -i | grep LISTEN
+
+Подключиться к постгрес через консоль:
+sudo -u postgres psql
+
+После этого в промпт терминала вставить текст из файла schema.sql, потом из файла data.sql
+(DROP TABLE IF EXISTS chat.users, chat.chatrooms, chat.messages;
+DROP SCHEMA IF EXISTS chat CASCADE;)
+select * from information_schema.tables;
+SELECT * FROM <table_name>;
+SELECT * FROM chat.messages;
+SELECT * FROM chat.messages WHERE id=1;
+
+https://drive.google.com/file/d/1rfnY0_lxtUrOAZqngs30fp6FvBBPRcZ5/view
+Как это делать (запускать из терминала) показано здесь, на 37 минуте
+
+SQL-запросы
+https://tproger.ru/translations/sql-recap/
+
+*****
+
+ex01:
+Добавляем зависимости <dependency> в pom.xml:
+в поисковике набираем: hikari maven или postgresql jdbc maven
+открываем первую ссылку, на открывшейся страничке выбираем версию (можно по количеству Usages, можно интуитивно :)), кликаем по цифре версии, и на новой странице копируем текст вместе с <dependency></dependency> для сборщика Maven (первая активная вкладка, скорее всего)
+
+https://easyjava.ru/data/pool/hello-database-connection-pools/
+database connection pools: шаг за шагом настраивается и используется соединение 
+
+https://easyjava.ru/data/pool/nastrojka-hikaricp/
+Настройка Хикари: метод new HikariDataSource();
+
+https://itnan.ru/post.php?c=1&p=533134&
+Немного про JBDC и объектно-реляционное (упоминается 3 уровня)
+
+https://ru.wikipedia.org/wiki/Java_Database_Connectivity
+Что такое JDBC? (Connection, Statement, ResultSet)
+
+https://metanit.com/java/database/2.6.php?
+класс PreparedStatement, его методы и их возвращаемые значения
+
+https://jdbc.postgresql.org/documentation/publicapi/org/postgresql/jdbc/PgResultSet.html
+ResultSet: методы для извлечения данных оттуда
+
+https://habr.com/ru/post/658457/
+Java 8: гид по классу Optional
+
+cd ex01
+
+mvn install
+
+Компилируем проект:
+mvn package или
+mvn clean package
+
+Запускаем проект:
+java -cp target/Chat-1.1-SNAPSHOT-jar-with-dependencies.jar  edu.school21.chat.app.Program
+
+*****
+
+ex02
+
+cd ex02 
+
+mvn clean package
+java -cp target/Chat-1.2-SNAPSHOT-jar-with-dependencies.jar  edu.school21.chat.app.Program
+
+https://pgcookbook.ru/article/using_returning.html?
+Практическое применение RETURNING: "После добавления строки в таблицу часто бывает нужно получить сгенерированный СУБД уникальный идентификатор этой строки (ID) или значение любого поля, которое имеет значение по умолчанию."
+
+******
+
+ex03
+
+mvn clean package
+java -cp target/Chat-1.3-SNAPSHOT-jar-with-dependencies.jar  edu.school21.chat.app.Program
+
+*****
+
+pom.xml:
+
+https://habr.com/ru/post/257223/?
+Про pom.xml
+
+https://question-it.com/questions/4715160/kakaja-polza-ot-pomxml-v-maven?
+Про pom.xml
+
+*****
+
+https://habr.com/ru/post/126966/?
+Как работает Maven
+(хм, много информации, надо перечитать)
+
+*****
+
+Команды Maven, например:
+
+mvn --version (или)
+mvn -v
+
+Вызвать фазу clean из жизненного цикла Maven:
+mvn clean
+
+Вызвать один из плагинов:
+mvn jar:jar (например)
+
+-----
+
++ Настройка вкладки Maven в IDEA
+
+https://zhbert.ru/posts/2021/05/10/the-maven-window-in-idea-is-missing.html
+Если по какой-то причине пропало окошко Maven справа в IDEA
+
+https://otvet.mail.ru/question/186141939
+Maven + Intellij IDEA, Как вернуть вкладку для работы с мавен проектом?
+Ответ: File → Settings → Plugins, там поиском maven
+
+https://question-it.com/questions/2349376/kak-poluchit-okno-proekta-maven-v-intellij-14-obnovlenie-ne-otobrazhaetsja-pravaja-panel-vkladok-v-proekte-maven?
+Сначала убедитесь, что вы включили плагин maven в
+File → Settings → Plugins → Maven Integration (Intellij plugin development with Maven)
+
+Если это так, но окно инструментов все еще скрыто, то
+Перейдите к View → Tool Windows → Maven Projects (или Maven), чтобы открыть его.
+
+-----
+
+Настройка вкладки Databases в IDEA
+
+НЕТ: https://ru.stackoverflow.com/questions/487003/intellij-idea-%D0%BF%D1%80%D0%BE%D0%BF%D0%B0%D0%BB-%D0%BF%D0%BB%D0%B0%D0%B3%D0%B8%D0%BD-database
+IntelliJ IDEA пропал плагин Database (это для коммерческой версии IDEA)
+
+=======
+
+ДОПОЛНИТЕЛЬНОЕ:
+(перепроверить)
+
+=======
+
+Устанавливаем JDBC driver на Убунту:
+
+Отсюда скачать JDBC driver:
+https://jdbc.postgresql.org/download.html
+
+Разархивируем и помещаем в каталог. Путь к файлу Driver.class указываем в методе (точки и слова - это папки/подпапки в пути к файлу): Class.forName("org.postgresql.Driver"); 
+(у меня этот метод в main'е)
+
+----
+Подключите актуальную версию драйвера JDBC
+https://www.youtube.com/watch?v=Ukqa3t6fgYI
+
+day_05 "проблему с подключением решил так, поставил  pgAdmin и postgresql, подключился к локалхосту, создал бд в пгадмине, и потом подключился по этому видео: https://www.youtube.com/watch?v=Tyf2sxb-G_E "
+
+*****
+
+https://habr.com/ru/sandbox/146588/?
+Настройка Intellij IDEA:
+Волшебная статья !!! по подключению postgresql к проекту из Intellij IDEA
+
+======
+В общем случае:
+Компляция:
+javac Program.java (указываем файл, в котором содержится main())
+javac -cp . ./Program.java (указываем файл с мэйном и путь к class-файлам)
+
+Запуск
+java -cp . Program
+
+******
+
+НЕТ: Устанавливаем postgresql на Убунту:
+# apt-get install libpostgresql-jdbc-java libpostgresql-jdbc-java-doc
+
+НЕТ: Переходим в каталог:
+pwd: /usr/share/java
+
+НЕТ: Перемещаем туда скачанный postgresql-42.3.4.jar:
+sudo mv '/home/abambi/IdeaProjects/d05/ex00/Chat/src/main/resources/postgresql-42.3.4.jar' .
+
+НЕТ: Проверяем, есть ли что-то в переменных (у меня не было):
+echo $JAVA_HOME
+echo $CLASSPATH
+
+НЕТ: Чтобы все юзеры видели эти переменные настраиваем (Java Environment) в файле: 
+sudo vim /etc/environment
+
+НЕТ: Добавляем в файл (вышеуказанный) строки:
+JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+CLASSPATH=".:/usr/share/java/mysql.jar:/usr/share/java/postgresql-jdbc4.jar"
+postgresql-42.3.4.jar
+(или другие версии jdk и/ил jdbc: Note1) change /usr/lib/jvm/java-8-openjdk-amd64 with your JDK. Note2) if you prefered to use postgresql-jdbc3, replace /usr/share/java/postgresql-jdbc4.jar with /usr/share/java/postgresql.jar
+
+НЕТ: Протеструйте соединение с помощью тестового файла TestDB.java (разместила его в корне папки)
+
+*****
+https://devcolibri.com/%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D0%B1%D0%B4-mysql-postgresql-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-jdbc-%D0%B4%D1%80%D0%B0%D0%B9%D0%B2%D0%B5%D1%80%D0%B0/?
+Работа с базами данных с помощью JDBC драйвера (работа с базами данных MySQL, PostgreSQL, Oracle)
+
+*****
+https://www.postgresql.org/docs/current/sql-dropschema.html
+https://www.examclouds.com/ru/java/java-core-russian/jdbc-work?
+
+https://stackoverflow.com/questions/1911253/the-infamous-java-sql-sqlexception-no-suitable-driver-found
+Как исправить ошибку: Class not found org.postgresql.Driver
+в методе Class.forName("org.postgresql.Driver");
